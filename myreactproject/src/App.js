@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
-import { Breadcrumb, Layout, Menu, theme, Col, Row, Divider, Tour, Typography, Tooltip, Button, Flex } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { Breadcrumb, Layout, Menu, theme, Col, Row, Divider, Tour, Typography, Tooltip, Button, Flex, Alert } from 'antd';
+import { InfoCircleOutlined, PrinterOutlined } from '@ant-design/icons';
 // import Humidity from './components/Humidity';
 // import Temperature from './components/Temperature';
 import Charts from './components/Charts'
@@ -8,6 +8,7 @@ import Charts from './components/Charts'
 import UisekLogo from './images/LOGO-UISEK-web-387x143-1.png';
 import Step1 from './components/Step1';
 import Step2 from './components/Step2';
+import TableData from './components/TableData';
 
 // import UploadData from './components/UploadData';
 import VulnerabilityForm from './components/VulnerabilityForm ';
@@ -97,22 +98,41 @@ const App = () => {
             borderRadius: borderRadiusLG,
           }}
         >
+          <Alert
+            message="Biometric data obtained from WhatsApp in Ecuador."
+            type="info"
+            showIcon
+            style={{ marginBottom: 24 }}
+          />
            <Row>
-              <Col span={24}>
+              <Col span={12}>
                 <Charts />
               </Col>
-              <Divider type="horizontal" />
-              
-              <Col span={24}>
-                <Flex justify={'space-between'} align={'center'}>
-                  <Title level={3} style={{'marginTop': 0}}>New predictions</Title>
-                  <Tooltip title="Information">
-                    <Button onClick={() => setOpen(true)} shape="circle" icon={<InfoCircleOutlined />} />
-                  </Tooltip>
-                </Flex>
+              <Col span={12}>
                 <VulnerabilityForm />
-              </Col>              
-          </Row>
+              </Col>
+              <Divider type="horizontal" />
+            </Row>
+
+            <Flex justify={'space-between'} align={'center'}>
+              <Title level={3} style={{'marginTop': 0}}>Historical Data</Title>
+              <div>
+                <Tooltip title="Print PDF">
+                  <Button 
+                    onClick={() => window.print()} 
+                    shape="circle" 
+                    icon={<PrinterOutlined />} 
+                    style={{ marginRight: '8px' }}
+                  />
+                </Tooltip>
+                <Tooltip title="Information">
+                  <Button onClick={() => setOpen(true)} shape="circle" icon={<InfoCircleOutlined />} />
+                </Tooltip>
+              </div>
+            </Flex>            
+            
+            <TableData />
+              
         </div>
       </Content>
       <Footer

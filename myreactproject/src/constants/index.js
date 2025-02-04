@@ -4156,22 +4156,22 @@ export const vector = [
 export const severity = [
     {
         "value": 0,
-        "label": "CRITICAL",
-        color: '#EE6666'
+        "label": "Approved",
+        color: '#91CC75'
     },
     {
         "value": 1,
-        "label": "HIGH",
-        color: '#FC8452'
+        "label": "Disapproved",
+        color: '#EE6666'
     },
-    {
-        "value": 2,
-        "label": "LOW",
-        color: '#73C0DE'
-    },
-    {
-        "value": 3,
-        "label": "MEDIUM",
-        color: '#91CC75'
-    }
+    // {
+    //     "value": 1,
+    //     "label": "HIGH",
+    //     color: '#FC8452'
+    // },
+    // {
+    //     "value": 2,
+    //     "label": "LOW",
+    //     color: '#73C0DE'
+    // },
 ]

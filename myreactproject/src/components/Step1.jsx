@@ -16,12 +16,12 @@ const Step1 = () => {
         {
           key: '3',
           label: 'Semester',
-          children: '5to',
+          children: '6to',
         },
         {
           key: '4',
           label: 'Subject',
-          children: 'Análisis de Datos',
+          children: 'Data Mining',
         },
         {
             key: '5',

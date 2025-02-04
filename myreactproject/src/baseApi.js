@@ -30,7 +30,20 @@ export const baseApi = createApi({
         // },
       }),
     }),
+    getBiometricData: builder.query({
+      query: () => 'biometric-data/'
+    }),
+    getBiometricLifeTestResults: builder.query({
+      query: () => 'biometric-life-test-results/'
+    }),
+    getBiometricFacematchResults: builder.query({
+      query: () => 'biometric-facematch-results/'
+    }),
+    getBiometricResults: builder.query({
+      query: () => 'biometric-results/'
+    }),
   })
 });
 
-export const { useGetSeverityCountQuery, useGetScatterDataQuery, useUploadCSVMutation, useSendFormDataMutation } = baseApi;
+export const { useGetSeverityCountQuery, useGetScatterDataQuery, useUploadCSVMutation, useSendFormDataMutation, useGetBiometricDataQuery, useGetBiometricLifeTestResultsQuery, 
+  useGetBiometricFacematchResultsQuery, useGetBiometricResultsQuery  } = baseApi;

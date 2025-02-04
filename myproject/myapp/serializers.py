@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from myapp.models import Vulnerability
+from myapp.models import Vulnerability, BiometricData
 
 
 # class VulnerabilitySerializer(serializers.ModelSerializer):
@@ -12,3 +12,8 @@ from myapp.models import Vulnerability
 
 #     def get_key(self, obj):
 #         return obj.id
+
+class BiometricDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BiometricData
+        fields = '__all__'

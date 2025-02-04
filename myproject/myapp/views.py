@@ -43,51 +43,30 @@ class SeverityVsCVSSChart(APIView):
 
 class PredictionView(APIView):
     def post(self, request):
-        vendor_project = request.data.get("vendor_project")
-        product = request.data.get("product")
-        vulnerability_name = request.data.get("vulnerability_name")
-        grp = request.data.get("grp")
-        cvss = request.data.get("cvss")
-        cwe = request.data.get("cwe")
-        vector = request.data.get("vector")
-        date_added_year = request.data.get("date_added_year")
-        date_added_month = request.data.get("date_added_month")
-        date_added_day = request.data.get("date_added_day")
-        due_date_year = request.data.get("due_date_year")
-        due_date_month = request.data.get("due_date_month")
-        due_date_day = request.data.get("due_date_day")
-        pub_date_year = request.data.get("pub_date_year")
-        pub_date_month = request.data.get("pub_date_month")
-        pub_date_day = request.data.get("pub_date_day")
+        life_test_result = request.data.get("life_test_result")
+        document_check_result = request.data.get("document_check_result")
+        facematch_result = request.data.get("facematch_result")
+        date_year = request.data.get("date_year")
+        date_month = request.data.get("date_month")
+        date_day = request.data.get("date_day")
+
+        # Convert categorical values to numerical if needed
+        life_test_result = 0 if life_test_result == "Approved" else 1
+        document_check_result = 0 if document_check_result == "Approved" else 1
+        facematch_result = int(facematch_result)
 
         value_to_predict = [
-            vendor_project,
-            product,
-            vulnerability_name,
-            grp,
-            cvss,
-            cwe,
-            vector,
-            date_added_year,
-            date_added_month,
-            date_added_day,
-            due_date_year,
-            due_date_month,
-            due_date_day,
-            pub_date_year,
-            pub_date_month,
-            pub_date_day,
+            life_test_result,
+            document_check_result,
+            facematch_result,
+            # date_year,
+            # date_month,
+            # date_day,
         ]
 
-        execution_type = request.data.get("execution_type")
-        if execution_type == "python":
-            prediction = model.predict([value_to_predict])
-        else:
-            prediction = connector.run_process(
-                score_path,
-                inputs=[value_to_predict],
-            )
-            prediction = prediction["prediction(severity)"]
+        prediction = model.predict([value_to_predict])
+        print(prediction)
+
         return Response({"prediction": prediction[0]})
 
 
@@ -133,3 +112,38 @@ class UploadCSVAPIView(APIView):
 # class VulnerabilityListCreateView(generics.ListCreateAPIView):
 #     queryset = Vulnerability.objects.all().order_by("-date")
 #     serializer_class = VulnerabilitySerializer
+
+from rest_framework import generics
+from .models import BiometricData
+from .serializers import BiometricDataSerializer
+
+class BiometricDataListView(generics.ListAPIView):
+    queryset = BiometricData.objects.all()
+    serializer_class = BiometricDataSerializer
+
+class BiometricLifeTestResultsView(APIView):
+    def get(self, request):
+        data = (
+            BiometricData.objects.values('life_test_result')
+            .annotate(count=Count('life_test_result'))
+            .order_by('life_test_result')
+        )
+        return Response(data)
+
+class BiometricFacematchResultsView(APIView):
+    def get(self, request):
+        data = (
+            BiometricData.objects.values('facematch_result')
+            .annotate(count=Count('facematch_result'))
+            .order_by('facematch_result')
+        )
+        return Response(data)
+
+class BiometricResultsView(APIView):
+    def get(self, request):
+        data = (
+            BiometricData.objects.values('biometric_result')
+            .annotate(count=Count('biometric_result'))
+            .order_by('biometric_result')
+        )
+        return Response(data)
