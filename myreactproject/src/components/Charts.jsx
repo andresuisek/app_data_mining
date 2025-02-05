@@ -8,7 +8,7 @@ const { Title } = Typography;
 const Charts = () => {
     const { data: dataBiometricResults } = useGetBiometricResultsQuery();
 
-    const colors = ['#91CC75', '#EE6666'];
+    const colors = ['#EE6666', '#91CC75'];
 
     const optionBiometricResults = (data) => ({
         tooltip: {
